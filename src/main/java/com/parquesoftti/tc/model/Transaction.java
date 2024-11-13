@@ -15,24 +15,24 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Transaction")
+@Table(name = "Transaction") // aqui ponemos el nombre que tiene nuestra table en la base da datos
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal amount;
 
     @Column(nullable = false)
     private LocalDateTime date;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 28)
     private String status;
 
-    @Column(nullable = false)
-    private Long credit_card_id;
+//    @Column(nullable = false)
+//    private Long credit_card_id;
 
     @ManyToOne
     @JoinColumn(name = "credit_card_id")
