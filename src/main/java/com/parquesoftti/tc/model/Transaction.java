@@ -1,5 +1,6 @@
 package com.parquesoftti.tc.model;
 
+import com.parquesoftti.tc.service.TransactionService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Transaction") // aqui ponemos el nombre que tiene nuestra table en la base da datos
+@Table(name = "transaction", schema = "public") // aqui ponemos el nombre que tiene nuestra table en la base da datos
+
 public class Transaction {
 
     @Id
@@ -31,11 +33,15 @@ public class Transaction {
     @Column(nullable = false, length = 28)
     private String status;
 
-//    @Column(nullable = false)
-//    private Long credit_card_id;
-
     @ManyToOne
     @JoinColumn(name = "credit_card_id")
     private CreditCard creditCard;
+
+//    controller -> service -> implementacion -> repositorio -> modelo = arquitectura en capas
+
+//    primero el modelo Transaction.java,
+//    sigue el repositorio transactionRepository,
+//    seguimos con la interfaz TransactionService
+//    por ultimo tenemos la implementacion TransactionServiceImpl por ultimo controller
 
 }
