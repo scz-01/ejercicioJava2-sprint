@@ -25,6 +25,14 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.findAll();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Transaction> getTransactionById(Long id){
+        if (id == null || id <= 0){
+            throw new IllegalArgumentException("El campo no puede ser nulo ni ser menor o igual a 0");
+        }
+        return transactionRepository.findById(id);
+    }
 
 //    @Override
 //    public Transaction saveTransaction(Transaction transaction) {

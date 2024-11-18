@@ -7,6 +7,7 @@ import java.util.Optional;
 public interface TransactionService {
 
     public List<Transaction> getTransactions();
+    public Optional<Transaction> getTransactionById(Long id);
 
 //    public List<Transaction> getTransactionCards();
 //

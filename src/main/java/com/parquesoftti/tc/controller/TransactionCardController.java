@@ -21,6 +21,13 @@ public class TransactionCardController {
     public ResponseEntity<List<Transaction>> getTransactionCard(){
         return ResponseEntity.ok().body(transactionService.getTransactions());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Transaction> getTransactionById(
+            @PathVariable Long id){
+        return ResponseEntity.ok().body(transactionService.getTransactionById(id).get());
+    }
+
 //    private final TransactionService transactionService;
 //
 //    @GetMapping()
