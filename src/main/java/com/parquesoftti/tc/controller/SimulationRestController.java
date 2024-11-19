@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/simulation")
 public class SimulationRestController {
 
-    @PostMapping()
-    public ResponseEntity<String> payment(){
-        return ResponseEntity.ok("Hola mundo");
-    }
-
-    @PutMapping()
-    public ResponseEntity<String> reversePayment() {
-        return null;
-    }
+//    @PostMapping()
+//    public ResponseEntity<String> payment(){
+//        return ResponseEntity.ok("Hola mundo");
+//    }
+//
+//    @PutMapping()
+//    public ResponseEntity<String> reversePayment() {
+//        return null;
+//    }
 
 //    @DeleteMapping()
 //    public ResponseEntity<String> deleteCard(){

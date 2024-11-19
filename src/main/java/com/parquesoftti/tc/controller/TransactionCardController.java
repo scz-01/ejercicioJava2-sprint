@@ -17,34 +17,30 @@ public class TransactionCardController {
 
     private final TransactionService transactionService;
 
+    // Consultar todos
     @GetMapping()
     public ResponseEntity<List<Transaction>> getTransactionCard(){
         return ResponseEntity.ok().body(transactionService.getTransactions());
     }
 
+    // Consultar pagos por Id
     @GetMapping("/{id}")
     public ResponseEntity<Transaction> getTransactionById(
             @PathVariable Long id){
         return ResponseEntity.ok().body(transactionService.getTransactionById(id).get());
     }
 
-//    private final TransactionService transactionService;
-//
-//    @GetMapping()
-//    public ResponseEntity<List<Transaction>> getTransactions(){
-//        return ResponseEntity.ok().body(transactionService.getTransactionCards());
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Transaction> getTransactionById(
-//            @PathVariable Long id){
-//        return ResponseEntity.ok().body(transactionService.getTransactionById(id).get());
-//    }
-//
-//    @GetMapping("/transactionsId/{transaction}")
-//    public ResponseEntity<Transaction> getTransactionsById(
-//            @PathVariable String transaction){
-//        return ResponseEntity.ok().body(transactionService.getTransactionByIdTransaction(transaction));
-//    }
+    // Payment
+    @PostMapping()
+    public ResponseEntity<Transaction> savePayment(@RequestBody Transaction transaction){
+        return ResponseEntity.ok().body(transactionService.savePayment(transaction));
+    }
+
+    // Reverse Payment
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletePayment(@PathVariable Long id){
+        transactionService.reversePayment(id);
+        return ResponseEntity.ok().body("");
+    }
 
 }

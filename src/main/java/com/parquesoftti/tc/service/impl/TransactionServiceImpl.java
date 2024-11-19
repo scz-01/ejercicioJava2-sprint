@@ -34,60 +34,40 @@ public class TransactionServiceImpl implements TransactionService{
         return transactionRepository.findById(id);
     }
 
-//    @Override
-//    public Transaction saveTransaction(Transaction transaction) {
-//        return null;
-//    }
-//
-//    private final TransactionRepository transactionRepository;
-//
-//    @Override
-//    @Transactional(readOnly = true)
-//    public List<Transaction> getTransactionCards(){
-//        return transactionRepository.findAll();
-//    }
-//
-//    @Override
-//    @Transactional(readOnly = true)
-//    public Optional<Transaction> getTransactionById(Long id){
-//        if (id == null || id <= 0){
-//            throw new IllegalArgumentException("El id debe ser positivo y no nulo");
-//        }
-//        return transactionRepository.findById(id);
-//    }
-//
-//    @Override
-//    public Transaction getTransactionByIdTransaction(String transactionId) {
-//        return null;
-//    }
 
+    @Transactional(readOnly = false, rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+    @Override
+    public Transaction savePayment(Transaction transaction){
+        validatePayment(transaction);
+        return transactionRepository.save(transaction);
+    }
 
-    // ---------------------------------------------------------------------
+    private void validatePayment (Transaction transaction){
+        if (transaction == null){
+            throw new IllegalArgumentException("el pago no puede ser nulo");
+        }
 
-//    @Transactional(readOnly = false, rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
-//    @Override
-//    public Transaction saveTransaction(Transaction transaction){
-//        validateTransaction(transaction);
-//        return TransactionRepository.save(transaction);
-//    }
+        if (transaction.getAmount() == null ){
+            throw new IllegalArgumentException("el monto no puede ser nulo");
+        }
 
+        if (transaction.getStatus() == null){
+            throw new IllegalArgumentException("debe ingresar el estado del pago (rechazado - pendiente - realizado)");
+        }
 
+    }
 
-//    public CreditCard saveCreditCard(CreditCard creditCard) {
-//        validateCreditCard(creditCard);
-//        return creditCardRepository.save(creditCard);
-//    }
+    @Transactional(readOnly = false, rollbackFor = Exception.class,propagation = Propagation.REQUIRED)
+    @Override
+    public void reversePayment(Long id){
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("El ID debe ser positivo y no nulo.");
+        }
+        Optional<Transaction> existingPayment = getTransactionById(id);
+        if (existingPayment.isEmpty()) {
+            throw new RuntimeException("El pago no existe y no se puede eliminar.");
+        }
+        transactionRepository.deleteById(id);
+    }
 
-    //@Override
-//    @Transactional(readOnly = true)
-//    public Transaction getTransactionById (String transactionId){
-//
-//        var tmp1 = transactionRepository.findTransactionByIdTransaction(transactionId);
-//
-//        if (tmp1.isPresent()) {
-//            return tmp1.get();
-//        }else {
-//            throw new IllegalArgumentException("El numero de transaccion no existe");
-//        }
-//    }
 }
